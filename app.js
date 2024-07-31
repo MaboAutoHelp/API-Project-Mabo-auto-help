@@ -1,10 +1,16 @@
 const express = require('express')
 const db = require('./db')
-const userRouter = require('./routes/userRouter')
+
 
 const app = express()
+app.use(express.json())
 
-app.use('/test',userRouter)
+const cors = require ("cors")
+app.use(cors())
+
+//routes de users
+const UsersRoute =require('./routes/RouteUsers')
+app.use("/users",UsersRoute)
 
 app.listen(8000,()=>{
     console.log('Server is running on port 8000')
