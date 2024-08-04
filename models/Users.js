@@ -8,6 +8,9 @@ const UsersSchema = new mongoose.Schema({
     email:{
         type: String,
     },
+    tel:{
+        type: String,
+    },
     pwd:{
         type: String,
         required:true
