@@ -2,7 +2,7 @@ const UsersModel =require('../models/Users')
 
 //register
 const register = async (req,res)=>{
-    const { name,email,pwd} = req.body
+    const { name,email,pwd,tel} = req.body
 
     const user = await UsersModel.findOne({email})
   
@@ -17,6 +17,7 @@ const register = async (req,res)=>{
       name :name,
       email:email,
       pwd:pwd ,
+      tel:tel,
       
     });
   
