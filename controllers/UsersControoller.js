@@ -55,11 +55,22 @@ const updateUser = async (req, res) => {
   }
 };
 
+//getUser
+const getUser = async (req, res) => {
+  const { UserId } = req.params;
+  try {
+    const user = await UsersModel.findById(UserId);
+    res.json(user);
+  } catch (error) {
+    res.status(404).json({ message: 'user not found' });
+  }
+};
 
 
 
 module.exports={
     register,
     login,
-    updateUser
+    updateUser,
+    getUser
 }
