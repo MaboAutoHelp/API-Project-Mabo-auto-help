@@ -11,8 +11,6 @@ const register = async (req,res)=>{
   
     }
   
-   
-    
     const newUser =new UsersModel({
       name :name,
       email:email,
@@ -34,22 +32,34 @@ const login =async (req,res)=>{
     return res.json({message:"User doesn't exists!"})
 
   }
-  
- 
-
-  
-
   if(!pwd == user.pwd){
     return res.json({message:"email or password is not correct"})
 
   }
-
-  
-
   return res.json({ userID:user._id})
-
 }
+
+//updateUser
+const updateUser = async (req, res) => {
+  const { UserId } = req.params;
+  const { name,email,pwd,tel } = req.body;
+  try {
+    const updateUser = await UsersModel.findByIdAndUpdate(
+      UserId,
+      { name,email,pwd,tel },
+      { new: true }
+    );
+    res.json(updateUser);
+  } catch (error) {
+    res.status(404).json({ message: 'UserId not found' });
+  }
+};
+
+
+
+
 module.exports={
     register,
-    login
+    login,
+    updateUser
 }
