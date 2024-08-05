@@ -12,7 +12,13 @@ app.use(cors())
 const UsersRoute =require('./routes/RouteUsers')
 app.use("/users",UsersRoute)
 
+//routes de admin
+const AdminRoute =require('./routes/RouteAdmin')
+app.use("/admin",AdminRoute)
 
+//routes de Micaniciens
+const MicaniciensRoute =require('./routes/RouteMicaniciens')
+app.use("/Micaniciens",MicaniciensRoute)
 ///test1 github
 
 app.listen(  8000,()=>{
