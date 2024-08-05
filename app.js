@@ -16,6 +16,9 @@ app.use("/users",UsersRoute)
 const AdminRoute =require('./routes/RouteAdmin')
 app.use("/admin",AdminRoute)
 
+//routes de Micaniciens
+const MicaniciensRoute =require('./routes/RouteMicaniciens')
+app.use("/Micaniciens",MicaniciensRoute)
 ///test1 github
 
 app.listen(  8000,()=>{
