@@ -12,6 +12,9 @@ app.use(cors())
 const UsersRoute =require('./routes/RouteUsers')
 app.use("/users",UsersRoute)
 
+//routes de admin
+const AdminRoute =require('./routes/RouteAdmin')
+app.use("/admin",AdminRoute)
 
 ///test1 github
 
