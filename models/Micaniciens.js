@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const UsersSchema = new mongoose.Schema({
+const MicaniciensSchema = new mongoose.Schema({
     name:{
         type: String,
         required:true
@@ -17,5 +17,5 @@ const UsersSchema = new mongoose.Schema({
 
 
 
-const MicaniciensModel= mongoose.model("Micaniciens",UsersSchema)
+const MicaniciensModel= mongoose.model("Micaniciens",MicaniciensSchema)
 module.exports = MicaniciensModel
