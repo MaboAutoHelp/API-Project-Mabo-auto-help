@@ -19,7 +19,10 @@ app.use("/admin",AdminRoute)
 //routes de Micaniciens
 const MicaniciensRoute =require('./routes/RouteMicaniciens')
 app.use("/Micaniciens",MicaniciensRoute)
-///test1 github
+
+//routes de Service
+const ServiceRoute =require('./routes/RouteService')
+app.use("/Service",ServiceRoute)
 
 app.listen(  8000,()=>{
     console.log('Server is running on port 8000')

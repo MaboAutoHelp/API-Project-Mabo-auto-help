@@ -1,0 +1,27 @@
+const mongoose = require("mongoose")
+
+const ServiceSchema = new mongoose.Schema({
+    userID:{
+        type: String,
+        
+    },
+    serviceName:{
+        type: String,
+    },
+    date:{
+        type: String,
+    },
+    time:{
+        type: String,
+    },
+    carType:{
+        type: String,
+    }
+    
+    
+})
+
+
+
+const ServiceModel= mongoose.model("service",ServiceSchema)
+module.exports = ServiceModel
