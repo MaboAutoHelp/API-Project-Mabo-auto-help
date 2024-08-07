@@ -19,6 +19,21 @@ const registerService = async (req,res)=>{
   
     return res.json({message:"Service created successfully"})
 }
+//getAllService
+const getAllService = async (req, res) => {
+  const { id } = req.params;
+  try {
+      const Services = await ServiceModel.find({ userID: id });
+      if (Services) {
+          res.json(Services);
+      } else {
+          res.status(404).json({ message: 'Services not found' });
+      }
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
 
 
 
@@ -26,5 +41,6 @@ const registerService = async (req,res)=>{
 
 module.exports={
     registerService,
+    getAllService
     
 }
