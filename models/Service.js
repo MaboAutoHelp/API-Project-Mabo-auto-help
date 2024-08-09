@@ -5,6 +5,12 @@ const ServiceSchema = new mongoose.Schema({
         type: String,
         
     },
+    name:{
+        type: String,
+    },
+    teluser:{
+        type:String,
+    },
     serviceName:{
         type: String,
     },
@@ -16,7 +22,11 @@ const ServiceSchema = new mongoose.Schema({
     },
     carType:{
         type: String,
+    },
+    ita:{
+        type: String,
     }
+    
     
     
 })
