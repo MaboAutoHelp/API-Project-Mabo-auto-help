@@ -2,16 +2,19 @@ const ServiceModel =require('../models/Service')
 
 //register
 const registerService = async (req,res)=>{
-    const { userID,serviceName,date,time,carType} = req.body
+    const { userID,name,teluser,serviceName,date,time,carType} = req.body
 
     
   
     const newService =new ServiceModel({
       userID:userID,
+      name:name,
+      teluser:teluser,
       serviceName:serviceName,
       date:date,
       time:time,
-      carType:carType
+      carType:carType,
+      ita:"attente"
       
     });
   
@@ -35,12 +38,17 @@ const getAllService = async (req, res) => {
   }
 };
 
-
+ //getAllServices
+ const getAllServices = async (req,res)=>{
+    const AllServices = await ServiceModel.find()
+    res.json(AllServices);
+  }
 
 
 
 module.exports={
     registerService,
-    getAllService
+    getAllService,
+    getAllServices
     
 }
