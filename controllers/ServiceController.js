@@ -44,11 +44,28 @@ const getAllService = async (req, res) => {
     res.json(AllServices);
   }
 
+  //updateService
+ const updateService = async (req, res) => {
+  const { ID } = req.params;
+  const { ita  } = req.body;
+  try {
+    const updateservice = await ServiceModel.findByIdAndUpdate(
+      ID,
+      { ita },
+      { new: true }
+    );
+    res.json(updateservice);
+  } catch (error) {
+    res.status(404).json({ message: 'ID not found' });
+  }
+};
+
 
 
 module.exports={
     registerService,
     getAllService,
-    getAllServices
+    getAllServices,
+    updateService
     
 }
