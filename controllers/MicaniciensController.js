@@ -11,9 +11,6 @@ const register = async (req,res)=>{
       return res.json({message:"Micaniciens already exists!"})
   
     }
-  
-    
-    
     const newMicaniciens =new MicaniciensModel ({
       name:name,
       tel:tel,
@@ -24,10 +21,15 @@ const register = async (req,res)=>{
   
     return res.json({message:"Micaniciens created successfully"})
 }
-
+ //getAllMicaniciens
+ const getAllMicaniciens = async (req,res)=>{
+  const AllMicaniciens = await MicaniciensModel.find()
+  res.json(AllMicaniciens);
+}
 
 module.exports={
     register,
+    getAllMicaniciens
     
    
     
