@@ -44,10 +44,21 @@ const login =async (req,res)=>{
     return res.json({ adminID:admin._id})
   
   }
+  //getUser
+const getAdmin = async (req, res) => {
+  const { adminID } = req.params;
+  try {
+    const admin = await AdminModel.findById(adminID);
+    res.json(admin);
+  } catch (error) {
+    res.status(404).json({ message: 'admin not found' });
+  }
+};
 
 module.exports={
     register,
     login,
+    getAdmin
    
     
 };
