@@ -25,6 +25,9 @@ const ServiceSchema = new mongoose.Schema({
     },
     ita:{
         type: String,
+    },
+    prix:{
+        type: String,
     }
     
     
