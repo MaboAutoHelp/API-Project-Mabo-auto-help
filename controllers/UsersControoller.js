@@ -66,11 +66,18 @@ const getUser = async (req, res) => {
   }
 };
 
+ //getAllUser
+ const getAllUser = async (req,res)=>{
+  const AllUser = await UsersModel.find()
+  res.json(AllUser);
+}
+
 
 
 module.exports={
     register,
     login,
     updateUser,
-    getUser
+    getUser,
+    getAllUser
 }

@@ -2,7 +2,7 @@ const ServiceModel =require('../models/Service')
 
 //register
 const registerService = async (req,res)=>{
-    const { userID,name,teluser,serviceName,date,time,carType} = req.body
+    const { userID,name,teluser,serviceName,date,time,carType,prix} = req.body
 
     
   
@@ -14,7 +14,8 @@ const registerService = async (req,res)=>{
       date:date,
       time:time,
       carType:carType,
-      ita:"attente"
+      ita:"attente",
+      prix:prix
       
     });
   
@@ -44,6 +45,17 @@ const getAllService = async (req, res) => {
     res.json(AllServices);
   }
 
+   //getAllServicesAccepted
+ const getAllServicesAccepted = async (req,res)=>{
+  const AllServicesAccepted = await ServiceModel.find({ita: "accepted"})
+  res.json(AllServicesAccepted);
+}
+//getAllServicesRejected
+const getAllServicesRejected= async (req,res)=>{
+  const AllServicesRejected = await ServiceModel.find({ita: "rejected"})
+  res.json(AllServicesRejected);
+}
+
   //updateService
  const updateService = async (req, res) => {
   const { ID } = req.params;
@@ -66,6 +78,9 @@ module.exports={
     registerService,
     getAllService,
     getAllServices,
-    updateService
+    updateService,
+    getAllServicesAccepted,
+    getAllServicesRejected
+
     
 }
