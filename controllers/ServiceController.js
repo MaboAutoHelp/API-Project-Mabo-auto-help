@@ -1,11 +1,12 @@
 const ServiceModel =require('../models/Service')
+const qrcode = require('qrcode');
 
 //register
 const registerService = async (req,res)=>{
     const { userID,name,teluser,serviceName,date,time,carType,prix} = req.body
 
     
-  
+  try{
     const newService =new ServiceModel({
       userID:userID,
       name:name,
@@ -18,10 +19,32 @@ const registerService = async (req,res)=>{
       prix:prix
       
     });
+    // تحويل البيانات إلى نص JSON لتوليد الـ QR Code
+    const serviceData = JSON.stringify({
+      userID,
+      name,
+      teluser,
+      serviceName,
+      date,
+      time,
+      carType,
+      prix
+    });
+    // إنشاء كود الـ QR
+    const qrCodeDataURL = await qrcode.toDataURL(serviceData);
+
+    // حفظ كود الـ QR في المستند الجديد
+    newService.qrCode = qrCodeDataURL;
+
   
     await newService.save();
+    res.status(200).json({ message: 'Service registered successfully', qrCode: qrCodeDataURL });
+  } catch (error) {
+    res.status(500).json({ message: 'Error registering service', error });
+  }
+    
   
-    return res.json({message:"Service created successfully"})
+    //return res.json({message:"Service created successfully"})
 }
 //getAllService
 const getAllService = async (req, res) => {
