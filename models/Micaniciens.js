@@ -12,6 +12,13 @@ const MicaniciensSchema = new mongoose.Schema({
     special:{
         type: String,
         
+    },
+    email:{
+        type: String,
+    },
+    pwd:{
+        type: String,
+        required:true
     }
 })
 
