@@ -1,5 +1,6 @@
-const ServiceModel =require('../models/Service')
+const ServiceModel =require('../models/Service');
 const qrcode = require('qrcode');
+const { v4: uuidv4 } = require('uuid');
 
 //register
 const registerService = async (req,res)=>{
@@ -7,7 +8,11 @@ const registerService = async (req,res)=>{
 
     
   try{
+    const serviceID = uuidv4();
+
+
     const newService =new ServiceModel({
+      _id: serviceID,
       userID:userID,
       name:name,
       teluser:teluser,
@@ -21,6 +26,7 @@ const registerService = async (req,res)=>{
     });
     // تحويل البيانات إلى نص JSON لتوليد الـ QR Code
     const serviceData = JSON.stringify({
+      serviceID,
       userID,
       name,
       teluser,
