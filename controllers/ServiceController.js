@@ -27,14 +27,7 @@ const registerService = async (req,res)=>{
     // تحويل البيانات إلى نص JSON لتوليد الـ QR Code
     const serviceData = JSON.stringify({
       serviceID,
-      userID,
-      name,
-      teluser,
-      serviceName,
-      date,
-      time,
-      carType,
-      prix
+      
     });
     // إنشاء كود الـ QR
     const qrCodeDataURL = await qrcode.toDataURL(serviceData);
@@ -100,7 +93,21 @@ const getAllServicesRejected= async (req,res)=>{
     res.status(404).json({ message: 'ID not found' });
   }
 };
-
+//getServiceID
+const getServiceID = async (req, res) => {
+  const { id } = req.params;
+  try {
+      const Services = await ServiceModel.findById(id);
+      if (Services) {
+          res.json(Services);
+      } else {
+          res.status(404).json({ message: 'Services not found' });
+      }
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
 
 
 module.exports={
@@ -109,7 +116,8 @@ module.exports={
     getAllServices,
     updateService,
     getAllServicesAccepted,
-    getAllServicesRejected
+    getAllServicesRejected,
+    getServiceID
 
     
 }
