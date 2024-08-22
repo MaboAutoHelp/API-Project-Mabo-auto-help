@@ -34,6 +34,9 @@ const ServiceSchema = new mongoose.Schema({
     },
     qrCode:{
         type: String,
+    },
+    MicanicienID:{
+        type :String,
     }
     
     

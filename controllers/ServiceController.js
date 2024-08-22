@@ -25,7 +25,7 @@ const registerService = async (req,res)=>{
       
     });
     // تحويل البيانات إلى نص JSON لتوليد الـ QR Code
-    const serviceData = JSON.stringify({
+    /*const serviceData = JSON.stringify({
       serviceID,
       
     });
@@ -33,11 +33,11 @@ const registerService = async (req,res)=>{
     const qrCodeDataURL = await qrcode.toDataURL(serviceData);
 
     // حفظ كود الـ QR في المستند الجديد
-    newService.qrCode = qrCodeDataURL;
+    newService.qrCode = qrCodeDataURL;*/
 
   
     await newService.save();
-    res.status(200).json({ message: 'Service registered successfully', qrCode: qrCodeDataURL });
+    res.status(200).json({ message: 'Service registered successfully'});
   } catch (error) {
     res.status(500).json({ message: 'Error registering service', error });
   }
@@ -66,8 +66,12 @@ const getAllService = async (req, res) => {
     const AllServices = await ServiceModel.find()
     res.json(AllServices);
   }
-
-   //getAllServicesAccepted
+//getAllServicesAccepted
+const getAllServicesAttente = async (req,res)=>{
+  const AllServicesAccepted = await ServiceModel.find({ita: "attente"})
+  res.json(AllServicesAccepted);
+}
+//getAllServicesAccepted
  const getAllServicesAccepted = async (req,res)=>{
   const AllServicesAccepted = await ServiceModel.find({ita: "accepted"})
   res.json(AllServicesAccepted);
@@ -81,11 +85,11 @@ const getAllServicesRejected= async (req,res)=>{
   //updateService
  const updateService = async (req, res) => {
   const { ID } = req.params;
-  const { ita  } = req.body;
+  const { ita,MicanicienID  } = req.body;
   try {
     const updateservice = await ServiceModel.findByIdAndUpdate(
       ID,
-      { ita },
+      { ita,MicanicienID },
       { new: true }
     );
     res.json(updateservice);
@@ -108,6 +112,45 @@ const getServiceID = async (req, res) => {
       res.status(500).json({ message: 'Internal Server Error' });
   }
 };
+const deletedService = async (req, res) => {
+  try {
+    const deletedService = await ServiceModel.deleteMany({}); // حذف جميع الكتب
+    res.json({ message: 'All books have been deleted successfully', deletedService });
+  } catch (error) {
+    res.status(500).json({ message: 'An error occurred while deleting the books' });
+  }
+};
+ //updateServiceIta
+ const updateServiceIta = async (req, res) => {
+  const { ID } = req.params;
+  const { ita } = req.body;
+  try {
+    const updateservice = await ServiceModel.findByIdAndUpdate(
+      ID,
+      { ita },
+      { new: true }
+    );
+    res.json(updateservice);
+  } catch (error) {
+    res.status(404).json({ message: 'ID not found' });
+  }
+};
+//getServiceMicanicien
+const getServiceMicaniciens = async (req, res) => {
+  const { id } = req.params;
+  try {
+      const Services = await ServiceModel.find({MicanicienID :id});
+      if (Services) {
+          res.json(Services);
+      } else {
+          res.status(404).json({ message: 'Services not found' });
+      }
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
 
 
 module.exports={
@@ -117,7 +160,11 @@ module.exports={
     updateService,
     getAllServicesAccepted,
     getAllServicesRejected,
-    getServiceID
+    getServiceID,
+    deletedService,
+    getAllServicesAttente,
+    updateServiceIta,
+    getServiceMicaniciens
 
     
 }
