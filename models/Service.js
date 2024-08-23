@@ -32,9 +32,7 @@ const ServiceSchema = new mongoose.Schema({
     prix:{
         type: String,
     },
-    qrCode:{
-        type: String,
-    },
+    
     MicanicienID:{
         type :String,
     }

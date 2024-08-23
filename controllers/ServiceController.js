@@ -82,6 +82,12 @@ const getAllServicesRejected= async (req,res)=>{
   res.json(AllServicesRejected);
 }
 
+//getAllServicesReparation
+const getAllServicesReparation= async (req,res)=>{
+  const AllServicesRejected = await ServiceModel.find({ita: "La réparation est terminée"})
+  res.json(AllServicesRejected);
+}
+
   //updateService
  const updateService = async (req, res) => {
   const { ID } = req.params;
@@ -164,7 +170,8 @@ module.exports={
     deletedService,
     getAllServicesAttente,
     updateServiceIta,
-    getServiceMicaniciens
+    getServiceMicaniciens,
+    getAllServicesReparation
 
     
 }
