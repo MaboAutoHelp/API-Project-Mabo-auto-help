@@ -3,7 +3,8 @@ const router = express.Router();
 const { registerService,
     getAllService,getAllServices ,updateService,getAllServicesAccepted,
     getAllServicesRejected,getServiceID,deletedService,getAllServicesAttente,
-    updateServiceIta,getServiceMicaniciens,getAllServicesReparation} = require('../controllers/ServiceController');
+    updateServiceIta,getServiceMicaniciens,getAllServicesReparation,
+    livraison , SansLivraison} = require('../controllers/ServiceController');
 
 router.post('/registerService', registerService);
 router.get('/getAllService/:id', getAllService);
@@ -16,7 +17,9 @@ router.delete('/deletedService', deletedService);
 router.get('/getAllServicesAttente', getAllServicesAttente);
 router.put('/updateServiceIta/:ID', updateServiceIta);
 router.get('/getServiceMicaniciens/:id', getServiceMicaniciens);
-router.get('/getAllServicesReparation', getAllServicesReparation);
+router.get('/getAllServicesReparation/:id', getAllServicesReparation);
+router.get('/livraison', livraison);
+router.get('/SansLivraison', SansLivraison);
 
 
 

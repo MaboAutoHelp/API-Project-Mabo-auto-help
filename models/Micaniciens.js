@@ -19,7 +19,12 @@ const MicaniciensSchema = new mongoose.Schema({
     pwd:{
         type: String,
         required:true
-    }
+    },
+    Revenu:{
+        type: Number,
+        default:0
+    },
+    
 })
 
 

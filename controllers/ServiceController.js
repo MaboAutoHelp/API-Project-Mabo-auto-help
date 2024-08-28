@@ -4,13 +4,11 @@ const { v4: uuidv4 } = require('uuid');
 
 //register
 const registerService = async (req,res)=>{
-    const { userID,name,teluser,serviceName,date,time,carType,prix} = req.body
+    const { userID,name,teluser,serviceName,date,time,carType,lieu ,prix} = req.body
 
     
   try{
     const serviceID = uuidv4();
-
-
     const newService =new ServiceModel({
       _id: serviceID,
       userID:userID,
@@ -20,6 +18,7 @@ const registerService = async (req,res)=>{
       date:date,
       time:time,
       carType:carType,
+      lieu:lieu,
       ita:"attente",
       prix:prix
       
@@ -84,7 +83,8 @@ const getAllServicesRejected= async (req,res)=>{
 
 //getAllServicesReparation
 const getAllServicesReparation= async (req,res)=>{
-  const AllServicesRejected = await ServiceModel.find({ita: "La réparation est terminée"})
+  const { id } = req.params;
+  const AllServicesRejected = await ServiceModel.find({userID: id ,ita: "La réparation est terminée"})
   res.json(AllServicesRejected);
 }
 
@@ -156,6 +156,18 @@ const getServiceMicaniciens = async (req, res) => {
       res.status(500).json({ message: 'Internal Server Error' });
   }
 };
+//livraison
+
+const  livraison = async (req,res)=>{
+  const AllServicesAccepted = await ServiceModel.find({lieu: "livraison"})
+  res.json(AllServicesAccepted);
+}
+//Sans livraison
+const  SansLivraison = async (req,res)=>{
+  const AllServicesAccepted = await ServiceModel.find({lieu: "Sans livraison"})
+  res.json(AllServicesAccepted);
+}
+
 
 
 
@@ -171,7 +183,9 @@ module.exports={
     getAllServicesAttente,
     updateServiceIta,
     getServiceMicaniciens,
-    getAllServicesReparation
+    getAllServicesReparation,
+    livraison,
+    SansLivraison
 
     
 }
