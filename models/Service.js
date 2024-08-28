@@ -26,6 +26,9 @@ const ServiceSchema = new mongoose.Schema({
     carType:{
         type: String,
     },
+    lieu:{
+        type: String,
+    },
     ita:{
         type: String,
     },
