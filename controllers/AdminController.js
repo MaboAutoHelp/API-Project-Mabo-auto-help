@@ -38,11 +38,16 @@ const getAdmin = async (req, res) => {
     res.status(404).json({ message: 'admin not found' });
   }
 };
+const getAllAdmin = async (req,res)=>{
+  const All = await AdminModel.find()
+  res.json(All);
+}
 
 module.exports={
     register,
     login,
-    getAdmin
+    getAdmin,
+    getAllAdmin
    
     
 };
