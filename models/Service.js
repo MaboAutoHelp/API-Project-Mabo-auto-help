@@ -1,12 +1,10 @@
 const mongoose = require("mongoose")
-
 const ServiceSchema = new mongoose.Schema({
     _id:{
         type: String,
     },
     userID:{
         type: String,
-        
     },
     name:{
         type: String,
@@ -38,13 +36,10 @@ const ServiceSchema = new mongoose.Schema({
     
     MicanicienID:{
         type :String,
-    }
-    
-    
-    
+    },
+    itaprix:{
+        type: String,
+    },
 })
-
-
-
 const ServiceModel= mongoose.model("service",ServiceSchema)
 module.exports = ServiceModel

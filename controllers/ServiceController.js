@@ -1,7 +1,9 @@
 const ServiceModel =require('../models/Service');
+const AdminModel =require('../models/Admins')
+
+
 const qrcode = require('qrcode');
 const { v4: uuidv4 } = require('uuid');
-
 //register
 const registerService = async (req,res)=>{
     const { userID,name,teluser,serviceName,date,time,carType,lieu ,prix} = req.body
@@ -20,7 +22,8 @@ const registerService = async (req,res)=>{
       carType:carType,
       lieu:lieu,
       ita:"attente",
-      prix:prix
+      prix:prix,
+      itaprix:"No"
       
     });
     // تحويل البيانات إلى نص JSON لتوليد الـ QR Code
@@ -33,15 +36,12 @@ const registerService = async (req,res)=>{
 
     // حفظ كود الـ QR في المستند الجديد
     newService.qrCode = qrCodeDataURL;*/
-
-  
     await newService.save();
     res.status(200).json({ message: 'Service registered successfully'});
   } catch (error) {
     res.status(500).json({ message: 'Error registering service', error });
   }
     
-  
     //return res.json({message:"Service created successfully"})
 }
 //getAllService
@@ -104,7 +104,7 @@ const getAllServicesReparation= async (req,res)=>{
   }
 };
 //getServiceID
-const getServiceID = async (req, res) => {
+/*const getServiceID = async (req, res) => {
   const { id } = req.params;
   try {
       const Services = await ServiceModel.findById(id);
@@ -117,7 +117,47 @@ const getServiceID = async (req, res) => {
       console.error(error);
       res.status(500).json({ message: 'Internal Server Error' });
   }
+};*/
+// getServiceID
+const getServiceID = async (req, res) => {
+  const { id } = req.params;
+  try {
+    // جلب بيانات الخدمة باستخدام المعرف
+    const service = await ServiceModel.findById(id);
+
+    if (service) {
+      const { MicanicienID, prix } = service;
+
+      // التحقق من أن MicanicienID و prix موجودان
+      if (MicanicienID && prix) {
+        // تحويل prix إلى رقم
+        const servicePrice = parseFloat(prix);
+
+        // تحديث Revenu للفني
+        const updatedMechanic = await AdminModel.findByIdAndUpdate(
+          MicanicienID,
+          { $inc: { Revenu: servicePrice } }, // إضافة السعر إلى Revenu
+          { new: true }
+        );
+
+        if (!updatedMechanic) {
+          return res.status(404).json({ message: 'Mechanic not found' });
+        }
+
+        // إعادة بيانات الخدمة مع الفني المحدث
+        res.json({ service, updatedMechanic });
+      } else {
+        res.status(400).json({ message: 'Missing MicanicienID or prix' });
+      }
+    } else {
+      res.status(404).json({ message: 'Service not found' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
 };
+
 const deletedService = async (req, res) => {
   try {
     const deletedService = await ServiceModel.deleteMany({}); // حذف جميع الكتب
@@ -167,10 +207,6 @@ const  SansLivraison = async (req,res)=>{
   const AllServicesAccepted = await ServiceModel.find({lieu: "Sans livraison"})
   res.json(AllServicesAccepted);
 }
-
-
-
-
 module.exports={
     registerService,
     getAllService,
