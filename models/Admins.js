@@ -14,6 +14,9 @@ const AdminSchema = new mongoose.Schema({
         type: Number,
         default:0
     },
+    Delete:{
+        type: String
+    }
     
 })
 
