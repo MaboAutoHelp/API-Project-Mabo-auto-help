@@ -97,12 +97,21 @@ const getZiza = async (req, res) => {
       return res.status(403).json({ message: 'Invalid token' });
     }
   };*/
-  
+  const getZizaRevenus = async (req, res) => {
+    const { ID } = req.params;
+    try {
+      const Ziza = await ZizaModel.findById(ID);
+      res.json(Ziza);
+    } catch (error) {
+      res.status(404).json({ message: 'Ziza not found' });
+    }
+  };
   
 
 
 module.exports={
     login,
     register,
-    getZiza
+    getZiza,
+    getZizaRevenus
 };

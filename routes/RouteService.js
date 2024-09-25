@@ -4,7 +4,7 @@ const { registerService,
     getAllService,getAllServices ,updateService,getAllServicesAccepted,
     getAllServicesRejected,getServiceID,deletedService,getAllServicesAttente,
     updateServiceIta,getServiceMicaniciens,getAllServicesReparation,
-    livraison , SansLivraison} = require('../controllers/ServiceController');
+    livraison , SansLivraison,getAllServicesYes,getServiceIDFactures} = require('../controllers/ServiceController');
 
 router.post('/registerService', registerService);
 router.get('/getAllService/:id', getAllService);
@@ -20,6 +20,8 @@ router.get('/getServiceMicaniciens/:id', getServiceMicaniciens);
 router.get('/getAllServicesReparation/:id', getAllServicesReparation);
 router.get('/livraison', livraison);
 router.get('/SansLivraison', SansLivraison);
+router.get('/getAllServicesYes', getAllServicesYes);
+router.get('/getServiceIDFactures/:id', getServiceIDFactures);
 
 
 

@@ -80,6 +80,11 @@ const getAllServicesRejected= async (req,res)=>{
   const AllServicesRejected = await ServiceModel.find({ita: "rejected"})
   res.json(AllServicesRejected);
 }
+//getAllServicesYes
+const getAllServicesYes= async (req,res)=>{
+  const AllServicesRejected = await ServiceModel.find({ita: "yes"})
+  res.json(AllServicesRejected);
+}
 
 //getAllServicesReparation
 const getAllServicesReparation= async (req,res)=>{
@@ -207,6 +212,18 @@ const  SansLivraison = async (req,res)=>{
   const AllServicesAccepted = await ServiceModel.find({lieu: "Sans livraison"})
   res.json(AllServicesAccepted);
 }
+
+const getServiceIDFactures = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const Factures = await ServiceModel.findById(id);
+    res.json(Factures);
+  } catch (error) {
+    res.status(404).json({ message: 'Factures not found' });
+  }
+};
+
+
 module.exports={
     registerService,
     getAllService,
@@ -221,7 +238,9 @@ module.exports={
     getServiceMicaniciens,
     getAllServicesReparation,
     livraison,
-    SansLivraison
+    SansLivraison,
+    getAllServicesYes,
+    getServiceIDFactures
 
     
 }
