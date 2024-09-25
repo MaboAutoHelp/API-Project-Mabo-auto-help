@@ -61,10 +61,26 @@ const getAllRevenus = async (req,res)=>{
   }
 
 
+const updatedRevenusAdmin =async (req,res)=>{
+  const { id } = req.params;
+  try {
+  const updatedAdmin = await AdminModel.findByIdAndUpdate(
+    id,
+    { Revenu: 0 },
+    { new: true }
+  );
+  res.status(200).json({ message: 'Service registered successfully', updatedAdmin });
+} catch (error) {
+  res.status(500).json({ message: 'Error registering service', error });
+}
+
+}
+
+
 
 module.exports={
     Revenus,
-    getAllRevenus
-   
+    getAllRevenus,
+    updatedRevenusAdmin
     
 };
