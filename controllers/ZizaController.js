@@ -45,7 +45,8 @@ const login = async (req, res) => {
     const token = jwt.sign({ id: Ziza._id, role: Ziza.role }, "Project Mabo auto help");
 
   
-    return res.json({token})
+    return res.json({token , ZizaID:Ziza._id})
+    
 
 };
 const getZiza = async (req, res) => {

@@ -23,6 +23,10 @@ const login =async (req,res)=>{
     if(!admin){
       return res.json({message:"Admin doesn't exists!"})
     }
+    if(admin.Delete == "No"){
+      return res.json({message:"ita no"})
+  
+    }
     if(!password == admin.password){
       return res.json({message:"username or password is not correct"})
     }
