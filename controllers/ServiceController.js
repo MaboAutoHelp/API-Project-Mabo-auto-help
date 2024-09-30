@@ -45,7 +45,7 @@ const registerService = async (req,res)=>{
     //return res.json({message:"Service created successfully"})
 }
 //getAllService
-const getAllService = async (req, res) => {
+/*const getAllService = async (req, res) => {
   const { id } = req.params;
   try {
       const Services = await ServiceModel.find({ userID: id });
@@ -58,7 +58,22 @@ const getAllService = async (req, res) => {
       console.error(error);
       res.status(500).json({ message: 'Internal Server Error' });
   }
+};*/
+const getAllService = async (req, res) => {
+  const { id } = req.params;
+  try {
+      const Services = await ServiceModel.find({ userID: id }).sort({ date: -1 });
+      if (Services && Services.length > 0) {
+          res.json(Services);
+      } else {
+          res.status(404).json({ message: 'Services not found' });
+      }
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+  }
 };
+
 
  //getAllServices
  const getAllServices = async (req,res)=>{
@@ -204,12 +219,12 @@ const getServiceMicaniciens = async (req, res) => {
 //livraison
 
 const  livraison = async (req,res)=>{
-  const AllServicesAccepted = await ServiceModel.find({lieu: "livraison"})
+  const AllServicesAccepted = await ServiceModel.find({lieu: "livraison"}).sort({ date: -1 });
   res.json(AllServicesAccepted);
 }
 //Sans livraison
 const  SansLivraison = async (req,res)=>{
-  const AllServicesAccepted = await ServiceModel.find({lieu: "Sans livraison"})
+  const AllServicesAccepted = await ServiceModel.find({lieu: "Sans livraison"}).sort({ date: -1 });
   res.json(AllServicesAccepted);
 }
 
