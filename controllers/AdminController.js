@@ -88,6 +88,24 @@ const updateDeleteStatus = async (req, res) => {
     return res.status(500).json({ message: 'Error updating admin', error });
   }
 };
+const updateDeleteStatusYES = async (req, res) => {
+  const { id } = req.params; 
+
+  try {
+    
+    const updatedAdmin = await AdminModel.findByIdAndUpdate(
+      id,
+      { Delete: "Yes" }, 
+      { new: true } 
+    );
+
+    
+
+    return res.json({ message: 'Admin updated successfully', admin: updatedAdmin });
+  } catch (error) {
+    return res.status(500).json({ message: 'Error updating admin', error });
+  }
+};
 
 
 
@@ -97,6 +115,7 @@ module.exports={
     getAdmin,
     getAllAdmin,
     updateAdmin,
-    updateDeleteStatus
+    updateDeleteStatus,
+    updateDeleteStatusYES
     
 };
