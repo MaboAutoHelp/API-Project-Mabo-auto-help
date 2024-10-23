@@ -237,6 +237,25 @@ const getServiceIDFactures = async (req, res) => {
     res.status(404).json({ message: 'Factures not found' });
   }
 };
+// new 
+/*const newService = async (req,res) =>{
+  const {serviceName,prix,v} = req.body
+  try{
+    const serviceID = uuidv4();
+    const newService =new ServiceModel({
+      _id: serviceID,
+      serviceName:serviceName,
+      prix:prix,
+      v:v
+      
+    });
+    await newService.save();
+    res.status(200).json({ message: 'Service registered successfully'});
+  } catch (error) {
+    res.status(500).json({ message: 'Error registering service', error });
+  }
+}*/
+
 
 
 module.exports={

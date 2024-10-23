@@ -4,17 +4,32 @@ const AdminModel =require('../models/Admins')
 //register
 const register = async (req,res)=>{
     const {username ,password} = req.body
-    const admin = await AdminModel.findOne({username})
-    if(admin){
-      return res.json({message:"Admin already exists!"})
+
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({ message: 'No token provided' });
     }
-    const newAdmin =new AdminModel({
+    const token = authHeader.split(" ")[1];
+    const decoded = jwt.verify(token, "Project Mabo auto help");
+
+    if (decoded.role=="Boss"){
+      const admin = await AdminModel.findOne({username})
+      if(admin){
+      return res.json({message:"Admin already exists!"})
+      }
+      const newAdmin =new AdminModel({
       username :username,
       password:password,
       Delete:"Yes"
-    }); 
-    await newAdmin.save();
-    return res.json({message:"Admin created successfully"})
+      }); 
+      await newAdmin.save();
+      return res.json({message:"Admin created successfully"})
+
+    }else{
+      return res.json({message:"role"})
+    }
+
+    
 }
 //login
 const login =async (req,res)=>{
