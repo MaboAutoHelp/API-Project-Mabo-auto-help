@@ -32,6 +32,10 @@ app.use("/Ziza",ZizaRoute)
 const RevenusRoute =require('./routes/RouteRevenus')
 app.use("/Revenus",RevenusRoute)
 
+//routes de ListService
+const ListServiceRoute =require('./routes/RouteListService')
+app.use("/ListService",ListServiceRoute)
+
 app.listen(  8000,()=>{
     console.log('Server is running on port 8000')
 })
