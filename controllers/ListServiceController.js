@@ -28,8 +28,44 @@ const  getVservice = async (req,res)=>{
   }
     }
 
+const getListID = async (req, res) => {
+      const { id } = req.params;
+      try {
+        const list = await ListServiceModel.findById(id);
+        res.json(list);
+      } catch (error) {
+        res.status(404).json({ message: 'list not found' });
+      }
+    };
+
+const updateList = async (req, res) => {
+      const { id } = req.params; // ID الخاص بالمسؤول الذي نريد تحديثه
+      const { serviceName, prix } = req.body; // البيانات المحدثة
+    
+      try {
+          const list = await ListServiceModel.findById(id);
+          if (!list) {
+              return res.status(404).json({ message: "list not found!" });
+          }
+    
+          // تحديث البيانات
+          list.serviceName = serviceName || list.serviceName;
+          list.prix = prix || list.prix;
+          
+    
+          // حفظ التحديثات
+          await list.save();
+          return res.json({ message: "list updated successfully", list });
+      } catch (error) {
+          console.error(error);
+          return res.status(500).json({ message: "Error updating list", error });
+      }
+    };
+
 module.exports={
     register,
-    getVservice
+    getVservice,
+    getListID,
+    updateList
     
 };
