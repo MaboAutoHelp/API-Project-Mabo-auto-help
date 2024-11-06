@@ -10,6 +10,8 @@ const registerService = async (req,res)=>{
 
     
   try{
+
+
     const serviceID = uuidv4();
     const newService =new ServiceModel({
       _id: serviceID,
@@ -113,9 +115,10 @@ const getAllServicesReparation= async (req,res)=>{
   const { ID } = req.params;
   const { ita,MicanicienID  } = req.body;
   try {
+    const lieu = await ServiceModel.find({_id :MicanicienID});
     const updateservice = await ServiceModel.findByIdAndUpdate(
       ID,
-      { ita,MicanicienID },
+      { ita,MicanicienID, },
       { new: true }
     );
     res.json(updateservice);

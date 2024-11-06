@@ -24,6 +24,9 @@ const MicaniciensSchema = new mongoose.Schema({
         type: Number,
         default:0
     },
+    lieu:{
+        type: String,
+    },
     
 })
 
