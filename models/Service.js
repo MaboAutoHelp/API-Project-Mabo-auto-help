@@ -41,6 +41,12 @@ const ServiceSchema = new mongoose.Schema({
     itaprix:{
         type: String,
     },
+    lieuMicanicien:{
+        type: String,
+    },
+    lieuUser:{
+        type: String,
+    },
 })
 const ServiceModel= mongoose.model("service",ServiceSchema)
 module.exports = ServiceModel

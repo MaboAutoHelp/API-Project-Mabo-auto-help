@@ -6,10 +6,12 @@ const qrcode = require('qrcode');
 const { v4: uuidv4 } = require('uuid');
 //register
 const registerService = async (req,res)=>{
-    const { userID,name,teluser,serviceName,date,time,carType,lieu ,prix} = req.body
+    const { userID,name,teluser,serviceName,date,time,carType,lieu ,prix,lieuUser} = req.body
 
     
   try{
+
+
     const serviceID = uuidv4();
     const newService =new ServiceModel({
       _id: serviceID,
@@ -23,7 +25,8 @@ const registerService = async (req,res)=>{
       lieu:lieu,
       ita:"attente",
       prix:prix,
-      itaprix:"No"
+      itaprix:"No",
+      lieuUser:lieuUser
       
     });
     // تحويل البيانات إلى نص JSON لتوليد الـ QR Code
@@ -113,9 +116,11 @@ const getAllServicesReparation= async (req,res)=>{
   const { ID } = req.params;
   const { ita,MicanicienID  } = req.body;
   try {
+    const micanicien = await ServiceModel.find({_id :MicanicienID});
+    const lieu = micanicien.lieu;
     const updateservice = await ServiceModel.findByIdAndUpdate(
       ID,
-      { ita,MicanicienID },
+      { ita,MicanicienID,lieu },
       { new: true }
     );
     res.json(updateservice);

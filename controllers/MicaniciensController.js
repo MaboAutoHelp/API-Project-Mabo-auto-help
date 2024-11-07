@@ -17,7 +17,7 @@ const login =async (req,res)=>{
 
 //register
 const register = async (req,res)=>{
-    const {name,tel,special,email,pwd} = req.body
+    const {name,tel,special,email,pwd,lieu} = req.body
     const Micaniciens = await MicaniciensModel.findOne({name})
     if(Micaniciens){
       return res.json({message:"Micaniciens already exists!"})
@@ -27,13 +27,14 @@ const register = async (req,res)=>{
       tel:tel,
       special:special,
       email:email,
-      pwd:pwd
+      pwd:pwd,
+      lieu:lieu
     });
     await newMicaniciens.save();
     return res.json({message:"Micaniciens created successfully"})
 }
  //getAllMicaniciens
- const getAllMicaniciens = async (req,res)=>{
+const getAllMicaniciens = async (req,res)=>{
   const AllMicaniciens = await MicaniciensModel.find()
   res.json(AllMicaniciens);
 }
