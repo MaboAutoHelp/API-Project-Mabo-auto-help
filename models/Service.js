@@ -44,6 +44,9 @@ const ServiceSchema = new mongoose.Schema({
     lieuMicanicien:{
         type: String,
     },
+    lieuUser:{
+        type: String,
+    },
 })
 const ServiceModel= mongoose.model("service",ServiceSchema)
 module.exports = ServiceModel
