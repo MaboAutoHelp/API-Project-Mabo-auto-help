@@ -3,7 +3,7 @@ const AdminModel =require('../models/Admins')
 
 //register
 const register = async (req,res)=>{
-    const {username ,password} = req.body
+    const {username ,password,tel,lieuMicanicien} = req.body
 
     /*const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -20,7 +20,10 @@ const register = async (req,res)=>{
       const newAdmin =new AdminModel({
       username :username,
       password:password,
-      Delete:"Yes"
+      Delete:"Yes",
+      tel:tel,
+      lieuMicanicien:lieuMicanicien
+      
       }); 
       await newAdmin.save();
       return res.json({message:"Admin created successfully"})
@@ -54,6 +57,17 @@ const getAdmin = async (req, res) => {
   try {
     const admin = await AdminModel.findById(adminID);
     res.json(admin);
+  } catch (error) {
+    res.status(404).json({ message: 'admin not found' });
+  }
+};
+const getAdminTelLieuMicanicien = async (req, res) => {
+  const { adminID } = req.params;
+  try {
+    const admin = await AdminModel.findById(adminID);
+    const {tel,lieuMicanicien} = admin
+    res.json({tel,lieuMicanicien});
+    //res.json(admin);
   } catch (error) {
     res.status(404).json({ message: 'admin not found' });
   }
@@ -131,6 +145,7 @@ module.exports={
     getAllAdmin,
     updateAdmin,
     updateDeleteStatus,
-    updateDeleteStatusYES
+    updateDeleteStatusYES,
+    getAdminTelLieuMicanicien
     
 };
