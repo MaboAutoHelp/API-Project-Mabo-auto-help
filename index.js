@@ -36,6 +36,10 @@ app.use("/Revenus",RevenusRoute)
 const ListServiceRoute =require('./routes/RouteListService')
 app.use("/ListService",ListServiceRoute)
 
-app.listen(  8000,()=>{
+app.get('/testmabo', (req, res) => {
+    res.send('Hello, World! This is a test for Mabo');
+});
+
+app.listen( process.env.PORT || 8000,()=>{
     console.log('Server is running on port 8000')
 })

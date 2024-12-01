@@ -16,7 +16,15 @@ const AdminSchema = new mongoose.Schema({
     },
     Delete:{
         type: String
-    }
+    },
+    tel:{
+        type: String
+    },
+    lieuMicanicien:{
+        type: String
+    },
+
+   
     
 })
 

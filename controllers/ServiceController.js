@@ -29,16 +29,7 @@ const registerService = async (req,res)=>{
       lieuUser:lieuUser
       
     });
-    // تحويل البيانات إلى نص JSON لتوليد الـ QR Code
-    /*const serviceData = JSON.stringify({
-      serviceID,
-      
-    });
-    // إنشاء كود الـ QR
-    const qrCodeDataURL = await qrcode.toDataURL(serviceData);
-
-    // حفظ كود الـ QR في المستند الجديد
-    newService.qrCode = qrCodeDataURL;*/
+    
     await newService.save();
     res.status(200).json({ message: 'Service registered successfully'});
   } catch (error) {
@@ -112,15 +103,14 @@ const getAllServicesReparation= async (req,res)=>{
 }
 
   //updateService
- const updateService = async (req, res) => {
+const updateService = async (req, res) => {
   const { ID } = req.params;
-  const { ita,MicanicienID  } = req.body;
+  const { ita,MicanicienID ,tel,lieuMicanicien } = req.body;
   try {
-    const micanicien = await ServiceModel.find({_id :MicanicienID});
-    const lieu = micanicien.lieu;
+    
     const updateservice = await ServiceModel.findByIdAndUpdate(
       ID,
-      { ita,MicanicienID,lieu },
+      { ita,MicanicienID,tel,lieuMicanicien },
       { new: true }
     );
     res.json(updateservice);
@@ -128,6 +118,197 @@ const getAllServicesReparation= async (req,res)=>{
     res.status(404).json({ message: 'ID not found' });
   }
 };
+/*const updateServiceTelLieuMicanicien = async (req, res) => {
+  const { ID } = req.params;
+  const { MicanicienID } = req.body;
+  
+  try {
+    // البحث عن الميكانيكي في مجموعة Admin
+    const micanicien = await AdminModel.findById(MicanicienID);
+
+    // التحقق إذا كان الميكانيكي موجودًا
+    if (!micanicien) {
+      return res.status(404).json({ message: 'Micanicien not found' });
+    }
+
+    const { tel, lieuMicanicien } = micanicien;
+
+    // تحديث بيانات الخدمة
+    const updateservice = await ServiceModel.findByIdAndUpdate(
+      ID,
+      { tel, lieuMicanicien },
+      { new: true }
+    );
+
+    // تحقق إذا كانت الخدمة موجودة وتم تحديثها
+    if (!updateservice) {
+      return res.status(404).json({ message: 'Service ID not found' });
+    }
+
+    res.json(updateservice);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};*/
+/*
+//test1
+const git = async (id) => {
+  
+  try {
+    const s = await ServiceModel.findById(id);
+    res.json(s);
+  } catch (error) {
+    res.status(404).json({ message: 's not found' });
+  }
+    
+}
+const updateServiceTelLieuMicanicien = async (req, res) => {
+  const { ID, MicanicienID } = req.params;
+  console.log('Received Service ID:', ID);
+  console.log('Received Micanicien ID:', MicanicienID);
+
+  try {
+    // البحث عن الميكانيكي
+    const micanicien = await AdminModel.findById( MicanicienID );
+    if (!micanicien) {
+      console.log('Micanicien not found');
+      return res.status(404).json({ message: 'Micanicien not found' });
+    }
+    console.log('Found Micanicien:', micanicien);
+
+    // البحث عن الخدمة
+    
+    const s = await git(ID);
+    if (!s) {
+      console.log('Service not found');
+      return res.status(404).json({ message: 'Service not found' });
+    }
+    console.log('Found Service:', s);
+
+    // تحديث الخدمة
+    const { tel, lieuMicanicien } = micanicien;
+    const updateservice = await ServiceModel.findByIdAndUpdate(
+      ID,
+      { tel, lieuMicanicien },
+      { new: true }
+    );
+
+    if (!updateservice) {
+      return res.status(404).json({ message: 'Service update failed' });
+    }
+
+    console.log('Service updated successfully:', updateservice);
+    res.json(updateservice);
+  } catch (error) {
+    console.error('Error updating service:', error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};*/
+
+
+
+
+const git = async (id) => {
+  try {
+    console.log('Searching for Service with ID:', id);
+
+    // البحث باستخدام الـ String مباشرةً
+    const service = await ServiceModel.findOne({ _id: id });
+
+    console.log("Montage terminé avec succès:", service);
+    return service;
+    
+  } catch (error) {
+    console.error('Error fetching service:', error);
+    return null;
+  }
+};
+
+
+const updateServiceTelLieuMicanicien = async (req, res) => {
+  const { ID, MicanicienID } = req.params;
+  console.log('Received Service ID:', ID);
+  console.log('Received Micanicien ID:', MicanicienID);
+
+  try {
+    // البحث عن الميكانيكي
+    const micanicien = await AdminModel.findById(MicanicienID);
+    if (!micanicien) {
+      console.log('Micanicien not found');
+      return res.status(404).json({ message: 'Micanicien not found' });
+    }
+    console.log('Found Micanicien:', micanicien);
+
+    // البحث عن الخدمة باستعمال الدالة المعدلة
+    const s = await git(ID);
+    if (!s) {
+      console.log('Service not found');
+      return res.status(404).json({ message: 'Service not found' });
+    }
+    console.log('Found Service:', s);
+
+    // تحديث الخدمة
+    const { tel, lieuMicanicien } = micanicien;
+    const updateservice = await ServiceModel.findByIdAndUpdate(
+      ID,
+      { tel, lieuMicanicien },
+      { new: true }
+    );
+
+    if (!updateservice) {
+      return res.status(404).json({ message: 'Service update failed' });
+    }
+
+    console.log('Service updated successfully:', updateservice);
+    res.json(updateservice);
+  } catch (error) {
+    console.error('Error updating service:', error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
+
+
+
+
+
+
+
+
+
+/*const updateService = async (req, res) => {
+  const { ID } = req.params;
+  const { ita, MicanicienID } = req.body;
+
+  try {
+    
+    const micanicien = await AdminModel.findById(MicanicienID);
+
+  
+    if (!micanicien) {
+      return res.status(404).json({ message: 'Micanicien not found' });
+    }
+
+    const tel = micanicien.tel;
+    const lieuMicanicien = micanicien.lieuMicanicien;
+
+    const updatedService = await ServiceModel.findByIdAndUpdate(
+      ID,
+      { ita, MicanicienID, tel,lieuMicanicien },
+      { new: true }
+    );
+
+    if (!updatedService) {
+      return res.status(404).json({ message: 'Service ID not found' });
+    }
+
+    res.json(updatedService);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};*/
+
 //getServiceID
 /*const getServiceID = async (req, res) => {
   const { id } = req.params;
@@ -263,6 +444,9 @@ const getServiceIDFactures = async (req, res) => {
 
 
 
+
+
+
 module.exports={
     registerService,
     getAllService,
@@ -279,7 +463,9 @@ module.exports={
     livraison,
     SansLivraison,
     getAllServicesYes,
-    getServiceIDFactures
+    getServiceIDFactures,
+    updateServiceTelLieuMicanicien,
+    git
 
     
 }
