@@ -18,7 +18,7 @@ const register = async (req,res)=>{
 }
 
 //login
-const login =async (req,res)=>{
+/*const login =async (req,res)=>{
   const {email ,pwd} = req.body
   const user = await UsersModel.findOne({email})
   if(!user){
@@ -28,7 +28,38 @@ const login =async (req,res)=>{
     return res.json({message:"email or password is not correct"})
   }
   return res.json({ userID:user._id})
-}
+}*/
+const login = async (req, res) => {
+  try {
+    const { email, pwd } = req.body;
+
+    // التحقق من صحة المدخلات
+    if (!email || !pwd) {
+      return res.status(400).json({ message: "Email and password are required" });
+    }
+
+    // البحث عن المستخدم
+    const user = await UsersModel.findOne({ email });
+
+    // التحقق من وجود المستخدم
+    if (!user) {
+      return res.status(404).json({ message: "User doesn't exist!" });
+    }
+
+    // مقارنة كلمة المرور
+    if (pwd !== user.pwd) {
+      return res.status(401).json({ message: "Email or password is not correct" });
+    }
+
+    // استجابة النجاح
+    return res.status(200).json({ userID: user._id });
+  } catch (error) {
+    // معالجة الأخطاء العامة
+    console.error("Error in login:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 
 //updateUser
 const updateUser = async (req, res) => {

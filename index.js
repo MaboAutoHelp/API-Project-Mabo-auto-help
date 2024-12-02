@@ -6,9 +6,12 @@ const app = express()
 app.use(express.json())
 
 const cors = require ("cors")
-app.use(cors({
+/*app.use(cors({
     origin:"https://api-project-mabo-auto-help-qj9poy1a3-mabos-projects-e9032b10.vercel.app"
-}))
+    
+}))*/
+app.use(cors());
+
 
 //routes de users
 const UsersRoute =require('./routes/RouteUsers')
